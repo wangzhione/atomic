@@ -31,12 +31,12 @@ static inline type atomic_load_##short_type(                            \
                                                                         \
 static inline void atomic_store_##short_type(                           \
     atomic_##short_type##_t * a, type val, atomic_memory_order_t mo) {  \
-	atomic_store_explicit(a, val, mo);                                  \
+    atomic_store_explicit(a, val, mo);                                  \
 }                                                                       \
                                                                         \
 static inline type atomic_exchange_##short_type(                        \
     atomic_##short_type##_t * a, type val, atomic_memory_order_t mo) {  \
-	return atomic_exchange_explicit(a, val, mo);                        \
+    return atomic_exchange_explicit(a, val, mo);                        \
 }                                                                       \
                                                                         \
 static inline _Bool atomic_compare_exchange_weak_##short_type(          \

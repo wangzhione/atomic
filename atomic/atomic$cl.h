@@ -56,7 +56,7 @@ ATOMIC_CONCAT(ATOMIC_INTERLOCKED_SUFFIX_, lg_size)
 
 #define GENERATE_ATOMICS(type, short_type, lg_size)                     \
 typedef struct {                                                        \
-	ATOMIC_INTERLOCKED_REPR(lg_size) repr;                              \
+    ATOMIC_INTERLOCKED_REPR(lg_size) repr;                              \
 } atomic_##short_type##_t;                                              \
                                                                         \
 static inline type atomic_load_##short_type(                            \
@@ -107,8 +107,8 @@ static inline _Bool atomic_compare_exchange_strong_##short_type(        \
     type * expected, type desired, atomic_memory_order_t success_mo,    \
     atomic_memory_order_t failure_mo) {                                 \
     /* We implement the weak version with strong semantics. */          \
-	return atomic_compare_exchange_weak_##short_type(a, expected,       \
-	    desired, success_mo, failure_mo);                               \
+    return atomic_compare_exchange_weak_##short_type(a, expected,       \
+        desired, success_mo, failure_mo);                               \
 }
 
 
@@ -117,8 +117,8 @@ GENERATE_ATOMICS(type, short_type, lg_size)                             \
                                                                         \
 static inline type atomic_fetch_add_##short_type(                       \
     atomic_##short_type##_t * a, type val, atomic_memory_order_t mo) {  \
-	return (type)ATOMIC_INTERLOCKED_NAME(_InterlockedExchangeAdd,       \
-	    lg_size)(&a->repr, (ATOMIC_INTERLOCKED_REPR(lg_size))val);      \
+    return (type)ATOMIC_INTERLOCKED_NAME(_InterlockedExchangeAdd,       \
+        lg_size)(&a->repr, (ATOMIC_INTERLOCKED_REPR(lg_size))val);      \
 }                                                                       \
                                                                         \
 static inline type atomic_fetch_sub_##short_type(                       \
