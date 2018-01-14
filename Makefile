@@ -3,13 +3,13 @@
 # Release : make
 # Clean   : make clean
 #
-ROOT	?= atomic
+ROOT    ?= atomic
 
 #
 # 全局编译的设置
 #
-CC		= gcc
-CFLAGS	= -g -O2 -Wall -Wno-unused-result
+CC      = gcc
+CFLAGS  = -g -O2 -Wall -Wno-unused-result
 
 #
 # 具体的产品生产								
