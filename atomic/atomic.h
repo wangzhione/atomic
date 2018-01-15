@@ -8,6 +8,11 @@
 #include "atomic$cl.h"
 #include "atomic$c11.h"
 
+// sys/types.h constructor
+#ifndef __ssize_t_defined
+typedef ptrdiff_t ssize_t;
+#endif
+
 #if defined(_M_X64) || defined(__x86_64__) || defined(_M_ARM64)
 #   define LG_SIZEOF_PTR 3
 #else

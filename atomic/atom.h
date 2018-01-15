@@ -3,14 +3,13 @@
 
 #include "atomic.h"
 
-//
-// atom_t 自旋锁构造
-// 
-// atom_t o = 0;
-// atom_lock(o);
-// /* One Man RPG */
-// atom_unlock(o);
-//
+/*
+ * atom_t 自旋锁类型
+ * atom_t o = 0 or static atom_t _m;
+ * atom_lock(o); 
+ * - One Man RPG
+ * atom_unlock(o);
+ */
 typedef volatile long atom_t;
 
 #if defined(__GNUC__)

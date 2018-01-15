@@ -3,8 +3,6 @@
 
 #include <windows.h>
 
-typedef ptrdiff_t ssize_t;
-
 #define ATOMIC_INIT(...) {__VA_ARGS__}
 
 typedef enum {

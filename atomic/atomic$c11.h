@@ -2,7 +2,6 @@
 #define _H_ATOMIC$C11
 
 #include <stdatomic.h>
-#include <sys/types.h>
 
 #define ATOMIC_INIT(...) ATOMIC_VAR_INIT(__VA_ARGS__)
 
@@ -49,7 +48,7 @@ static inline _Bool atomic_compare_exchange_weak_##short_type(          \
                                                                         \
 static inline _Bool atomic_compare_exchange_strong_##short_type(        \
     atomic_##short_type##_t * a,                                        \
-    type *expected, type desired, atomic_memory_order_t success_mo,     \
+    type * expected, type desired, atomic_memory_order_t success_mo,    \
     atomic_memory_order_t failure_mo) {                                 \
     return atomic_compare_exchange_strong_explicit(a, expected,         \
         desired, success_mo, failure_mo);                               \
