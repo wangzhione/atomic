@@ -4,21 +4,21 @@
 #include "atomic.h"
 
 /*
- * atom_t 自旋锁类型
- * atom_t o = 0 or static atom_t _m;
- * atom_lock(o); 
- * - One Man RPG
- * atom_unlock(o);
- */
+* atom_t 自旋锁类型
+* atom_t o = 0 or static atom_t _m;
+* atom_lock(o); 
+* - One Man RPG
+* atom_unlock(o);
+*/
 typedef volatile long atom_t;
 
 #if defined(__GNUC__)
 
-#define atom_trylock(o)     (!__sync_lock_test_and_set(&o, 1))
+#define atom_trylock(o)     (!__sync_lock_test_and_set(&(o), 1))
 
-#define atom_lock(o)        while(__sync_lock_test_and_set(&o, 1))
+#define atom_lock(o)        while(__sync_lock_test_and_set(&(o), 1))
 
-#define atom_unlock(o)      __sync_lock_release(&o)
+#define atom_unlock(o)      __sync_lock_release(&(o))
 
 // v += a ; return v;
 #define ATOM_ADD(v, a)      __sync_add_and_fetch(&(v), (a))
@@ -47,9 +47,9 @@ typedef volatile long atom_t;
 #define _ACQUIRE(x)	x
 #endif /* defined(_M_ARM) || defined(_M_ARM64) */
 
-#define atom_trylock(o)     (!_ACQUIRE(_interlockedbittestandset)(&o, 0))
+#define atom_trylock(o)     (!_ACQUIRE(_interlockedbittestandset)(&(o), 0))
 
-#define atom_lock(o)        while(_ACQUIRE(_interlockedbittestandset)(&o, 0))
+#define atom_lock(o)        while(_ACQUIRE(_interlockedbittestandset)(&(o), 0))
 
 inline void _store_release(atom_t * tgt, int val) {
     /* store _Value atomically with release memory order */
@@ -62,7 +62,7 @@ inline void _store_release(atom_t * tgt, int val) {
 #endif
 }
 
-#define atom_unlock(o)      _store_release(&o, 0)
+#define atom_unlock(o)      _store_release(&(o), 0)
 
 // v 和 a 都是 long 这样数据
 #define ATOM_ADD(v, a)      InterlockedAdd((volatile LONG *)&(v), (LONG)(a))
