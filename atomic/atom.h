@@ -12,13 +12,16 @@
 */
 typedef volatile long atom_t;
 
-#if defined(__GNUC__)
+#ifdef __GNUC__
 
 #define atom_trylock(o)     (!__sync_lock_test_and_set(&(o), 1))
 
 #define atom_lock(o)        while(__sync_lock_test_and_set(&(o), 1))
 
 #define atom_unlock(o)      __sync_lock_release(&(o))
+
+// 保证代码不乱序
+#define atom_sync()         __sync_synchronize()
 
 // v += a ; return v;
 #define ATOM_ADD(v, a)      __sync_add_and_fetch(&(v), (a))
@@ -35,34 +38,37 @@ typedef volatile long atom_t;
 
 #endif
 
-#if defined(_MSC_VER)
+#ifdef _MSC_VER
 
 #include <intrin.h>
 #include <intrin0.h>
 
 /* Interlocked intrinsic mapping for _nf/_acq/_rel */
 #if defined(_M_ARM) || defined(_M_ARM64)
-#define _ACQUIRE(x)	ATOMIC_CONCAT(x, _acq)
+#define _ACQUIRE(x) ATOMIC_CONCAT(x, _acq)
 #else /* defined(_M_ARM) || defined(_M_ARM64) */
-#define _ACQUIRE(x)	x
+#define _ACQUIRE(x) x
 #endif /* defined(_M_ARM) || defined(_M_ARM64) */
 
 #define atom_trylock(o)     (!_ACQUIRE(_interlockedbittestandset)(&(o), 0))
 
 #define atom_lock(o)        while(_ACQUIRE(_interlockedbittestandset)(&(o), 0))
 
-inline void _store_release(atom_t * tgt, int val) {
+inline void store_release(atom_t * x) {
     /* store _Value atomically with release memory order */
 #if defined(_M_ARM) || defined(_M_ARM64)
     __dmb(0xB /* _ARM_BARRIER_ISH or _ARM64_BARRIER_ISH*/);
-    __iso_volatile_store32((volatile int *)tgt, val);
+    __iso_volatile_store32((volatile int *)x, 0);
 #else
     _ReadWriteBarrier();
-    *tgt = val;
+    *x = 0;
 #endif
 }
 
-#define atom_unlock(o)      _store_release(&(o), 0)
+#define atom_unlock(o)      store_release(&(o))
+
+// 保证代码不乱序优化后执行
+#define atom_sync()         MemoryBarrier()
 
 // v 和 a 都是 long 这样数据
 #define ATOM_ADD(v, a)      InterlockedAdd((volatile LONG *)&(v), (LONG)(a))
