@@ -130,6 +130,7 @@
     <ClInclude Include="atom.h" />
     <ClInclude Include="atomic%24cl.h" />
     <ClInclude Include="atomic.h" />
+    <ClInclude Include="rwlock.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
