@@ -18,11 +18,14 @@
     <ClCompile Include="main.c">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="atomic%24c11.h">
-      <Filter>头文件</Filter>
+    <ClCompile Include="rwlock.c">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="atomic%24c11.h">
+      <Filter>头文件</Filter>
+    </ClCompile>
     <ClInclude Include="atomic%24cl.h">
       <Filter>头文件</Filter>
     </ClInclude>

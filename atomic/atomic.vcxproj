@@ -123,12 +123,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="atomic%24c11.h" />
     <ClCompile Include="main.c" />
+    <ClCompile Include="rwlock.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="atom.h" />
     <ClInclude Include="atomic%24cl.h" />
+    <ClCompile Include="atomic%24c11.h" />
     <ClInclude Include="atomic.h" />
     <ClInclude Include="rwlock.h" />
   </ItemGroup>
