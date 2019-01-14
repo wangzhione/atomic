@@ -40,6 +40,9 @@ typedef volatile long atom_t;
 
 #ifdef _MSC_VER
 
+#include <intrin.h>
+#include <intrin0.h>
+
 /* Interlocked intrinsic mapping for _nf/_acq/_rel */
 #  if defined(_M_ARM) || defined(_M_ARM64)
 #    define _ACQUIRE(x) ATOMIC_CONCAT(x, _acq)
