@@ -1,10 +1,10 @@
 # atomic
 
-    c11 stdatomic.h 的 cl 没支持, 不爽. 刚好遇到隐世大佬 jemalloc
+    不爽 cl 没支持 c11 atomic, 刚好遇到巨擘 jemalloc
 
 [jemalloc atomic](https://github.com/jemalloc/jemalloc/blob/dev/include/jemalloc/internal/atomic.h)
 
-    顺带封装到使用的项目中.
+    顺带封装并应用到项目中.
 
 ## 补充
 
