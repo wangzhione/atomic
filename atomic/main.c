@@ -3,17 +3,17 @@
 
 #include "atom.h"
 
-//
-// winds 为 stdatomic.h 写的项目 
+
+// 为 stdatomic.h 写的简易跨平台项目
 //
 int main(int argc, char * argv[]) {
-    char * some_ptr = "Hello, 世界";
-    atomic_p_t atomic_ptr_to_int;
-    atomic_store_p(&atomic_ptr_to_int, some_ptr, ATOMIC_RELAXED);
-    char * prev_value = atomic_exchange_p(&atomic_ptr_to_int, NULL, ATOMIC_ACQ_REL);
-    assert(some_ptr == prev_value);
-    
-    printf("%s\n", prev_value);
+    atomic_p_t ptr;
+    char * some = "Hello, 世界";
+    atomic_store_p(&ptr, some, memory_order_relaxed);
+    char * prev = atomic_exchange_p(&ptr, NULL, memory_order_acq_rel);
+    assert(some == prev);
+
+    printf("%s\n", prev);
 
     // 自旋锁测试
     atom_t o = 0;
