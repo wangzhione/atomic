@@ -3,7 +3,6 @@
 
 #include "atom.h"
 
-
 // 为 stdatomic.h 写的简易跨平台项目
 //
 int main(int argc, char * argv[]) {
@@ -15,8 +14,8 @@ int main(int argc, char * argv[]) {
 
     printf("%s\n", prev);
 
+	atom_t o = 0;
     // 自旋锁测试
-    atom_t o = 0;
     printf("atom_t o -> %ld\n", o);
 
     if (atom_trylock(o)) {
