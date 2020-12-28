@@ -1,5 +1,4 @@
-﻿#ifndef _ATOM_H
-#define _ATOM_H
+﻿#pragma once
 
 #include "atomic.h"
 
@@ -26,7 +25,7 @@ typedef volatile long atom_t;
 /* v += a ; return v; */
 #define atom_add(v, a)      __sync_add_and_fetch(&(v), (a))
 /* type tmp = v ; v = a; return tmp; */
-#define atom_set(v, a)      while(!__sync_bool_compare_and_swap(&(v), (v), (a)))
+#define atom_set(v, a)      __sync_lock_test_and_set(&(v), (a))
 /* v &= a; return v; */
 #define atom_and(v, a)      __sync_and_and_fetch(&(v), (a))
 /* return ++v; */
@@ -86,5 +85,3 @@ static inline void store_release(atom_t * x) {
 #define atom_cas(v, c, a)   ((LONG)(c) == InterlockedCompareExchange((volatile LONG *)&(v), (LONG)(a), (LONG)(c)))
 
 #endif
-
-#endif//_ATOM_H
