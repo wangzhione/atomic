@@ -9,7 +9,12 @@ ROOT    ?= atomic
 # 全局编译的设置
 #
 CC      = gcc
-CFLAGS  = -g -O2 -Wall -Wno-unused-result
+#
+# -Werror=incompatible-pointer-types	: 
+#
+#
+CFLAGS  = -g -O2 -Werror -Wall -Wextra
+LIB = -lpthread
 
 #
 # 具体的产品生产								
@@ -22,7 +27,7 @@ all : main.exe
 # 主运行程序main
 #
 main.exe : $(ROOT)/main.c
-	$(CC) $(CFLAGS) -o $@ $^
+	$(CC) $(CFLAGS) -o $@ $^ $(LIB)
 
 # 清除操作
 clean :
